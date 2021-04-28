@@ -5,6 +5,7 @@ import secrets, hashlib, binascii
 import math
 import itertools as it
 import random
+from pprint import pprint
 
 
 ### Az Ed-25519 curvet használom a program során ( Moneroban is )
@@ -13,9 +14,10 @@ import random
 
 curve = Curve.get_curve('Ed25519')
 G     = curve.generator
-print(f"Name: {curve.name}, Equation: -x^2 + y^2 = 1 -121665/121666 * x^2*y^2 (mod p) Type: {curve.type}")
-print(f"Size: {curve.size}, a={curve.a}, d={curve.d}")
-print(f"G={curve.generator}, field={curve.field}, order={curve.order}\n")
+pprint(f"Name: {curve.name}, Equation: -x^2 + y^2 = 1 -121665/121666 * x^2*y^2 (mod p) Type: {curve.type}")
+pprint(f"Size: {curve.size}, a={curve.a}, d={curve.d}")
+pprint(f"G={curve.generator}, field={curve.field}, order={curve.order}")
+print()
 
 
 ### Hashelésre a következő hash függvényt választottam:
@@ -78,10 +80,10 @@ def ring_sign(curve, message, public_keys, private_key, key_index):
     
     print("Signature részben kiszámolódik:")
     print("'e' tömb")
-    print(e)
+    pprint(e)
     print()
     print("s-k tömbje")
-    print(ss)
+    pprint(ss)
     print()
 
     ###Visszaadjuk a publikus kulcsokat tartalmazó tömböket, az üzenetet, az első elemet az e-ből, és a random s-ket + a signer s-ét
@@ -109,18 +111,18 @@ def verify(curve,public_keys, message, e_0, ss):
 
     print("Verify részben:")
     print("e-k")
-    print(e)
+    pprint(e)
     print()
     print("to_check érték")
     to_check = H3(message, z_s[n-1])
-    print(to_check)
+    pprint(to_check)
     print()
     
     
     if (e[0]== to_check):
-      print ("The signature is valid")
+      pprint ("The signature is valid")
     else:
-      print ("Invalid signature")
+      pprint ("Invalid signature")
 
 
 
